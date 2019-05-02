@@ -39,3 +39,23 @@ post('/create') do
     redirect('/') 
 end
 
+
+get('/profil') do
+    db = SQLite3::Database.new("db/blogg.db")
+    db.results_as_hash = true
+
+    if session[:Id] == nil
+        redirect('/')
+    else
+        result =  db.execute("SELECT Text, Images FROM profile WHERE UserId = ?", session[:Id])
+        
+        slim(:profile, locals:{
+            posts: result
+        })
+    end
+end
+
+get('/write') do
+    slim(:write)
+end
+
