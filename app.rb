@@ -16,10 +16,10 @@ end
 post('/log') do
     db = SQLite3::Database.new("db/blogg.db")
     db.results_as_hash = true
-    result = db.execute("SELECT UserID, Username, Password FROM Users WHERE username = ?", params["name"])
-    if result.length > 0 && BCrypt::Password.new(result.first["Password"]) == params["Password"]
+    result = db.execute("SELECT UserID, Username, Password FROM Users WHERE Username = ?", params["username"])
+    if result.length > 0 && BCrypt::Password.new(result.first["Password"]) == params["password"]
         session[:name] = result.first["username"]
-        session[:Id] = result.first["Id"]
+        session[:UserId] = result.first["UserId"]
         redirect('/log')
     else
         redirect('/')
