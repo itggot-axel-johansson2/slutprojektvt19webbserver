@@ -59,3 +59,11 @@ get('/write') do
     slim(:write)
 end
 
+post('/write') do
+    db = SQLite3::Database.new("db/blogg.db")
+    db.results_as_hash = true
+
+    db.execute("INSERT INTO inlägg(Text, Images, UserID) VALUES(?, ?, ?)" params["text"], params["image"], session[:id])
+
+    redirect('/profil')
+end

@@ -3,7 +3,17 @@ a href="/log"
 
 h2 New post
 
-form action="addtext" method="POST"
+form action="skriv" method="POST"
     input type="text" placeholder="Text" name="text"
     input type="text" placeholder="Images" name="image"
     button type="submit" Submit
+
+br 
+
+section
+    - posts.each do |posts|
+            article
+                p #{posts["Text"]}
+                img src="/posts/posts#{"Images"}"
+                form action="/edit/#{posts["Id"]}/delete" method="post"
+                    button type="submit" Delete
